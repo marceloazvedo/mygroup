@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Postagens</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/resources/templates/menu-bar.xhtml"/>
+        <p:panel>
+            <h3>Postagens da Sala: #{postagemBean.sala.titulo}, Tópico: #{postagemBean.topico.titulo}.</h3>
+        </p:panel>
+        <p:dataTable id="dtPostagens" var="postagem" value="#{postagemBean.postagens}" emptyMessage="Não há postagens neste tópico.">
+            <f:facet name="header">
+                Postagens
+            </f:facet>
+            <f:facet name="footer">
+                <p:commandButton value="Nova Postagem" onclick="PF('novaPostagem').show()">
+                    <f:setPropertyActionListener target="#{postagemBean.topico}" value="#{postagem.topico}"/>
+                </p:commandButton>
+            </f:facet>
+            <p:column>
+                <p:panelGrid columns="1">
+                    <p:outputLabel value="Postagem: #{postagem.postagem}"/>
+                    <p:outputLabel value="Data de Postagem: #{postagem.dataDePostagem}"/>
+                    <p:outputLabel value="Postado por: #{postagem.usuarioPost.nome}"/>
+                </p:panelGrid>
+            </p:column>
+        </p:dataTable>
+        <p:dialog widgetVar="novaPostagem" width="300" modal="true" resizable="false" draggable="false">
+            <h:form>
+                <h:panelGrid columns="1">
+                    <p:outputLabel value="Insira a postagem:"/>
+                    <p:inputTextarea cols="28" rows="6" value="#{postagemBean.postagem.postagem}"/>
+                </h:panelGrid>
+                <center>
+                    <p:commandButton value="Fazer Postagem" action="#{postagemBean.fazerPostagem()}" onclick="PF('novaPostagem').hide()" update="@all"/>
+                </center>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

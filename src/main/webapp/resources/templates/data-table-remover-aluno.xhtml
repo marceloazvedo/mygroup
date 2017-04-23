@@ -1,0 +1,35 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form id="dataTableRemover">
+        <p:dataTable id="dataTable" 
+                     style="width: 700px;" 
+                     selection="#{dtRemoverAluno.usuarioSelecionado}" 
+                     selectionMode="single"
+                     value="#{dtRemoverAluno.usuariosSala}"
+                     var="aluno"
+                     rowKey="#{aluno.id}"
+                     emptyMessage="Não há alunos nesta sala.">
+
+            <p:column
+                headerText="Nome"
+                sortBy="#{aluno.nome}">
+                #{aluno.nome}
+            </p:column>
+            <p:column
+                headerText="E-mail"
+                sortBy="#{aluno.email}">
+                #{aluno.email}
+            </p:column>
+
+
+            <f:facet name="footer">
+                <p:commandButton value="Remover" action="#{dtRemoverAluno.removerAluno()}" onclick="PF('removerAluno').close()"/>
+            </f:facet>
+        </p:dataTable>
+    </h:form>
+</ui:composition>
